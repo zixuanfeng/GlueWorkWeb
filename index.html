@@ -77,10 +77,12 @@
         .header p { font-size: 0.9rem; opacity: 0.8; line-height: 1.5; }
 
         /* --- Workspace (Grid) --- */
+/* --- Workspace (Grid) --- */
         .workspace {
             flex: 1;
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            /* UPDATED: Left is narrower (0.8), Right is wider (1.2) */
+            grid-template-columns: 0.8fr 1.2fr; 
             overflow: hidden;
         }
 
@@ -120,7 +122,8 @@
             overflow-y: auto;
             padding-right: 15px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            /* UPDATED: Force single column for a cleaner look in a narrow panel */
+            grid-template-columns: 1fr; 
             gap: 15px;
         }
 
@@ -245,8 +248,8 @@
         /* Score Voting Styles */
         .score-metrics-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            grid-template-columns: 1fr 1fr; /* This keeps them side-by-side */
+            gap: 15px;
             margin-bottom: 20px;
         }
         
@@ -294,22 +297,44 @@
 
     <div class="app-container">
         
-        <div class="header">
-            <div>
-                <div class="brand">
-                    <i class="ph-fill ph-code-branch" style="color:var(--accent);"></i>
-                    Glue Work Board
+<div class="header">
+    <div>
+        <div class="brand">
+            <i class="ph-fill ph-code-branch" style="color:var(--accent);"></i>
+            Glue Work Board
+        </div>
+        <p style="color:var(--accent);">OSS Sustainability Initiative</p>
+        <p>This is a community-driven resource based on research by Feng et al. We aim to collectively identify, track, and acknowledge the invisible labor that sustains Open Source Software.</p>
+        
+        <h2 style="margin-bottom: 5px;">Your Contribution</h2>
+        <p style="font-size:0.85rem;">Select a task to set consensus on its **Strategic Value**, **Visibility**, and **Tracking** methods.</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px;">
+        
+        <a href="https://zixuanfeng.github.io/zixuanfeng_page/papers/JAIS_GlueWork%20(1).pdf" target="_blank" style="text-decoration: none;">
+            <div style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); transition: var(--transition); display: flex; align-items: center; gap: 10px; color: white;">
+                <i class="ph-bold ph-file-pdf" style="font-size: 1.2rem; color: var(--accent);"></i>
+                <div style="font-size: 0.85rem;">
+                    <strong style="display: block;">Read the Research</strong>
+                    <span style="opacity: 0.7; font-size: 0.75rem;">Read Report</span>
                 </div>
-                <p style="color:var(--accent);">OSS Sustainability Initiative</p>
-                <p>This is a community-driven resource based on research by Feng et al. We aim to collectively identify, track, and acknowledge the invisible labor that sustains Open Source Software.</p>
-                
-                <h2 style="margin-bottom: 5px;">Your Contribution</h2>
-                <p style="font-size:0.85rem;">Select a Glue Work task. Use the voting buttons to set community consensus on its **Strategic Value**, **Visibility**, and the best **Tracking/Acknowledgment** methods.</p>
             </div>
-            <div style="font-size: 0.8rem; color: #9ca3af;">
-                <p style="margin: 5px 0 0 0;">Version 2.0 (Stable Voting)</p>
+        </a>
+
+        <div style="background: #374151; padding: 12px; border-radius: 10px; display: flex; align-items: center; gap: 10px; color: #9ca3af; cursor: not-allowed; border: 1px dashed #4b5563;">
+            <i class="ph-bold ph-hammer" style="font-size: 1.2rem;"></i>
+            <div style="font-size: 0.85rem;">
+                <strong style="display: block;">GitHub Bot</strong>
+                <span style="opacity: 0.8; font-size: 0.75rem;">--- Under Construction ---</span>
             </div>
         </div>
+
+        <div style="font-size: 0.75rem; color: #9ca3af; margin-top: 10px; text-align: center;">
+            <p>Version 2.0 (Stable Voting)</p>
+        </div>
+    </div>
+</div>
 
         <main class="workspace">
             
@@ -638,7 +663,6 @@ const ENTRY_FIELD_TEXT = "entry.PLACEHOLDER_TEXT_ID";
                     <p class="detail-definition">${data.definition}</p>
                     
                     <h3 class="detail-section-title" style="color:var(--dark);"><i class="ph-bold ph-chart-bar"></i> Community Consensus on Impact</h3>
-                    <p style="font-size:0.85rem; color:#6b7280; margin-top:-10px;">Your vote will be logged permanently and anonymously in your Google Sheet.</p>
                     <div class="score-metrics-grid">
                         ${importanceVote}
                         ${visibilityVote}
@@ -653,15 +677,16 @@ const ENTRY_FIELD_TEXT = "entry.PLACEHOLDER_TEXT_ID";
 
                     <div class="suggestion-box">
                         <h3 class="detail-section-title" style="color:var(--dark);"><i class="ph-bold ph-lightbulb-filament"></i> Submit a New Suggestion / PR</h3>
-                        <p style="font-size:0.85rem; color:#6b7280;">This opens a pre-filled Google Form tab to ensure proper data collection for review.</p>
-                        <textarea id="suggestionText" placeholder="Example: Use X-System-Logs as a new tracking method..."></textarea>
-                        <select id="suggestionType" style="padding: 8px; border-radius: 6px; margin-right: 10px; border: 1px solid #d1d5db;">
-                            <option value="track">New Tracking Method</option>
-                            <option value="ack">New Acknowledgment</option>
-                        </select>
-                        <button class="submit-btn" onclick="submitSuggestion(${data.id})">Submit Idea to Google Form</button>
+                        
+                        <p style="font-size:0.85rem; color:#6b7280;">If you have any suggestions regarding this catalog, you can tell us more about the glue work?</p>
+                        
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScG2PPOjUGaMPM-EqRudhlKHEH3n37laSywfTFZo3kfoCz2OA/viewform?usp=header" 
+                           target="_blank" 
+                           style="text-decoration: none;">
+                            <button class="submit-btn" style="width: 100%;">Submit Idea to Google Form</button>
+                        </a>
                     </div>
-                </div>
+                </div>      
             `;
         }
 
